@@ -18,7 +18,7 @@
         : '',
 
       variant === 'ghost' 
-        ? 'bg-transparent text-gray-500 hover:text-[#ff1493] hover:bg-[#ff1493]/5' 
+        ? 'bg-gray-100 text-gray-500 hover:text-[#ff1493] hover:bg-[#ff1493]/5' 
         : '',
 
       variant === 'danger' 

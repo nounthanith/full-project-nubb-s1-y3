@@ -3,8 +3,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.createUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
-    if (!name || !email || !password || !role) return res.status(400).json({ message: "All fields are required" });
+    const { name, email, password, role, salary } = req.body;
+    if (!name || !email || !password || !role || !salary) return res.status(400).json({ message: "All fields are required" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -12,7 +12,8 @@ exports.createUser = async (req, res) => {
         name,
         email,
         password: hashedPassword,
-        role
+        role,
+        salary
     });
 
     res.status(201).json({
@@ -51,7 +52,6 @@ exports.getUsers = async (req, res) => {
     });
 }
 
-
 exports.getUserById = async (req, res) => {
     const { id } = req.params;
     const user = await UserModel.findById(id);
@@ -64,8 +64,8 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, password, role } = req.body;
-    const user = await UserModel.findByIdAndUpdate(id, { name, email, password, role }, { new: true });
+    const { name, email, password, role, salary } = req.body;
+    const user = await UserModel.findByIdAndUpdate(id, { name, email, password, role, salary }, { new: true });
     res.status(200).json({
         success: true,
         message: "User updated",

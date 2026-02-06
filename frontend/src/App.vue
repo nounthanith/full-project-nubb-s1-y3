@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import Navbar from './layouts/Navbar.vue';
+import { Toaster } from 'vue-sonner'
+import 'vue-sonner/style.css'
+import MainLayout from './layouts/MainLayout.vue';
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 </script>
 
 <template>
-  <Navbar>
+  <MainLayout v-if="route.name !== 'Login'">
     <RouterView />
-  </Navbar>
+  </MainLayout>
+  <RouterView v-else />
+  <Toaster position="top-right" /> <!-- can add richColors prop for colored toasts -->
 </template>

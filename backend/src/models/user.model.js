@@ -19,6 +19,10 @@ const userShcema = mongoose.Schema({
         minLength: 6,
         select: false
     },
+    salary: {
+        type: Number,
+        require: true,
+    },
     role: {
         type: String,
         enum: ["admin", "delivery", "manager", "inventory_manager", "customer"],
