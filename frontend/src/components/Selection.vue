@@ -22,8 +22,8 @@
                focus:bg-white focus:border-[#ff1493] focus:ring-4 focus:ring-[#ff1493]/10"
       >
         <option value="" disabled selected>{{ placeholder || 'Select a role' }}</option>
-        <option v-for="role in roles" :key="role" :value="role" class="bg-white text-gray-900">
-          {{ role }}
+        <option v-for="item in roles" :key="item._id || item" :value="item._id || item" class="bg-white text-gray-900">
+          {{ item.name || item }}
         </option>
       </select>
     </div>

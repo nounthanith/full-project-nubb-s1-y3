@@ -23,6 +23,9 @@ app.use("/api/users", userRouter)
 const categoryRouter = require("./routes/category.route")
 app.use("/api/categories", categoryRouter)
 
+const shippingRouter = require("./routes/shipping.route")
+app.use("/api/shipping", shippingRouter)
+
 
 
 module.exports = app

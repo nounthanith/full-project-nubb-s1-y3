@@ -42,6 +42,7 @@ const menuItems = [
   { name: 'Dashboard', path: '/' },
   { name: 'Users', path: '/users' },
   { name: 'Categories', path: '/categories' },
+  { name: 'Shipping', path: '/shipping' },
 ]
 
 const closeOnMobile = () => {
