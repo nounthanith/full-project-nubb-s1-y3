@@ -7,7 +7,7 @@
 
   <aside 
     :class="[
-      'fixed top-0 left-0 h-full bg-white border-r border-gray-100 z-999 transition-all duration-300 ease-in-out w-72',
+      'fixed top-0 left-0 h-full bg-white border-r border-pink-300 z-999 transition-all duration-300 ease-in-out w-72',
       isOpen ? 'translate-x-0' : '-translate-x-full'
     ]"
   >
@@ -41,8 +41,7 @@ const emit = defineEmits(['close'])
 const menuItems = [
   { name: 'Dashboard', path: '/' },
   { name: 'Users', path: '/users' },
-  { name: 'Analytics', path: '/analytics' },
-  { name: 'Settings', path: '/settings' }
+  { name: 'Categories', path: '/categories' },
 ]
 
 const closeOnMobile = () => {

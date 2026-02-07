@@ -15,7 +15,7 @@
             stroke-width="3">
             <path d="M12 5v14M5 12h14" />
           </svg>
-          Add New
+          Add User
         </span>
       </BaseBtn>
     </header>
