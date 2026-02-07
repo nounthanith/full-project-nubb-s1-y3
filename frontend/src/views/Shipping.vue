@@ -117,11 +117,10 @@
             <div class="space-y-8 py-6 max-h-[75vh] overflow-y-auto px-1 custom-scrollbar">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
-                        <label class="text-[10px] font-black uppercase text-gray-400 ml-1">Category</label>
                         <Selection v-model="form.category" :roles="categories" label="Category"
                             placeholder="Select a category" />
                     </div>
-                    <Input v-model="form.weight" type="number" label="Weight (kg)" />
+                    <Input v-model="form.weight" @input="updateShippingCost" type="number" label="Weight (kg)" />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -129,23 +128,25 @@
                         <h3 class="text-[10px] font-black text-[#ff1493] uppercase tracking-[0.2em] mb-4">Pickup Info
                         </h3>
                         <Input v-model="form.sender.name" label="Name" />
+                        <Selection v-model="form.sender.address" :roles="addresses" label="Address"
+                            placeholder="Select an address" />
                         <Input v-model="form.sender.phone" label="Phone" />
-                        <Input v-model="form.sender.address" label="Address" />
                     </div>
 
                     <div class="space-y-4">
                         <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-4">Delivery Info
                         </h3>
                         <Input v-model="form.recipient.name" label="Name" />
+                        <Selection v-model="form.recipient.address" :roles="addresses" label="Address"
+                            placeholder="Select an address" />
                         <Input v-model="form.recipient.phone" label="Phone" />
                         <Input v-model="form.recipient.address" label="Address" />
                     </div>
                 </div>
 
                 <div class="pt-6 border-t border-gray-50 grid grid-cols-2 gap-4">
-                    <Input v-model="form.shippingCost" type="number" label="Total Price ($)" />
+                    <Input v-model="form.shippingCost" type="number" label="Total Price ($)" readonly />
                     <div v-if="isEditing" class="space-y-1">
-                        <label class="text-[10px] font-black uppercase text-gray-400 ml-1">Status</label>
                         <Selection v-model="form.status" :roles="['Pending', 'In Transit', 'Delivered']" label="Status"
                             placeholder="Select a status" />
                     </div>
@@ -153,8 +154,11 @@
             </div>
         </BaseDialog>
 
-        <BaseDialog v-model="showDeleteConfirm" @close="showDeleteConfirm = false" title="Delete Confirmation">
-            Are you sure you want to delete this shipping?
+        <BaseDialog :show="showDeleteConfirm" @close="showDeleteConfirm = false" @confirm="handleDelete" 
+            confirmText="Delete" title="Delete Confirmation">
+            Are you sure you want to delete shipping with tracking number 
+            <span class="text-[#ff1493] font-bold">{{ selectedShipping?.trackingNumber }}</span>? 
+            This action cannot be undone.
         </BaseDialog>
     </div>
 </template>
@@ -174,15 +178,54 @@ const loading = ref(false);
 const showForm = ref(false);
 const isEditing = ref(false);
 const search = ref('');
+const showDeleteConfirm = ref(false);
+const selectedShipping = ref(null);
+
+const addresses = ref([
+    { name: 'Phnom Penh', capital: 'Autonomous Municipality' },
+    { name: 'Battambang', capital: 'Battambang' },
+    { name: 'Siem Reap', capital: 'Siem Reap' },
+    { name: 'Banteay Meanchey', capital: 'Serei Saophoan' },
+    { name: 'Kampong Cham', capital: 'Kampong Cham' },
+    { name: 'Kampong Chhnang', capital: 'Kampong Chhnang' },
+    { name: 'Kampong Speu', capital: 'Chbar Mon' },
+    { name: 'Kampong Thom', capital: 'Steung Saen' },
+    { name: 'Kampot', capital: 'Kampot' },
+    { name: 'Kandal', capital: 'Ta Khmau' },
+    { name: 'Kep', capital: 'Kep' },
+    { name: 'Koh Kong', capital: 'Khemarak Phoumin' },
+    { name: 'Kratie', capital: 'Kratie' },
+    { name: 'Mondulkiri', capital: 'Senmonorom' },
+    { name: 'Oddar Meanchey', capital: 'Samraong' },
+    { name: 'Pailin', capital: 'Pailin' },
+    { name: 'Preah Sihanouk', capital: 'Sihanoukville' },
+    { name: 'Preah Vihear', capital: 'Preah Vihear' },
+    { name: 'Pursat', capital: 'Pursat' },
+    { name: 'Prey Veng', capital: 'Prey Veng' },
+    { name: 'Ratanak Kiri', capital: 'Banlung' },
+    { name: 'Ratanakiri', capital: 'Banlung' },
+    { name: 'Stung Treng', capital: 'Stung Treng' },
+    { name: 'Svay Rieng', capital: 'Svay Rieng' },
+    { name: 'Takeo', capital: 'Doun Kaev' },
+    { name: 'Tboung Khmum', capital: 'Suong' }
+]);
 
 const form = ref({
     category: '',
-    sender: { name: '', phone: '', address: '' },
-    recipient: { name: '', phone: '', address: '' },
+    sender: { name: '', phone: '', address: '', province: '' },
+    recipient: { name: '', phone: '', address: '', province: '' },
     weight: 1,
     shippingCost: 0,
     status: 'Pending'
 });
+
+const calculateShippingCost = (weight) => {
+    return weight * 0.25;
+};
+
+const updateShippingCost = () => {
+    form.value.shippingCost = calculateShippingCost(form.value.weight);
+};
 
 const fetchShippings = async () => {
     loading.value = true;
@@ -207,7 +250,7 @@ const saveShipping = async () => {
             await api.put(`/api/shipping/${form.value._id}`, form.value);
             toast.success("Shipment updated");
         } else {
-            await api.post('/api/shipping', form.value);
+            await api.post('/api/shipping/create', form.value);
             toast.success("New order created");
         }
         showForm.value = false;
@@ -219,11 +262,14 @@ const saveShipping = async () => {
 
 const openAddModal = () => {
     isEditing.value = false;
+    const initialWeight = 1;
     form.value = {
         category: '',
-        sender: { name: '', phone: '', address: '' },
-        recipient: { name: '', phone: '', address: '' },
-        weight: 1, shippingCost: 0, status: 'Pending'
+        sender: { name: '', phone: '', address: '', province: '' },
+        recipient: { name: '', phone: '', address: '', province: '' },
+        weight: initialWeight, 
+        shippingCost: calculateShippingCost(initialWeight), 
+        status: 'Pending'
     };
     showForm.value = true;
 };
@@ -237,6 +283,18 @@ const openEditModal = (item) => {
 const confirmDelete = (item) => {
     selectedShipping.value = item;
     showDeleteConfirm.value = true;
+};
+
+const handleDelete = async () => {
+    try {
+        await api.delete(`/api/shipping/${selectedShipping.value._id}`);
+        toast.success("Shipping deleted successfully");
+        showDeleteConfirm.value = false;
+        selectedShipping.value = null;
+        fetchShippings();
+    } catch (err) {
+        toast.error(err.response?.data?.message || "Delete failed");
+    }
 };
 
 const statusClass = (status) => {
