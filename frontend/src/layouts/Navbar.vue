@@ -1,6 +1,6 @@
 <template>
   <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 h-20 border-b-pink-300">
-    <div class="max-w-full mx-auto h-full px-6 flex items-center justify-between">
+    <div class="max-w-full mx-auto h-full px-2 flex items-center justify-between">
 
       <div class="flex items-center gap-4">
         <button @click="$emit('toggleSidebar')"

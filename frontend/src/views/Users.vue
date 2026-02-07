@@ -29,62 +29,53 @@
       No users found
     </div>
 
-    <div v-else class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
-      <div v-for="(user, index) in users" :key="user.id"
-        class="group relative bg-white border border-gray-100 p-4 rounded-2xl hover:shadow-2xl hover:shadow-[#ff1493]/10 hover:border-[#ff1493]/30 transition-all duration-500 animate-in fade-in slide-in-from-bottom-3"
-        :style="{ 'animation-delay': `${index * 40}ms` }">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+    <div v-else class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+  <div v-for="(user, index) in users" :key="user.id"
+    class="group relative bg-white border border-gray-100 p-3 sm:p-4 rounded-2xl hover:shadow-2xl hover:shadow-[#ff1493]/10 hover:border-[#ff1493]/30 transition-all duration-500 animate-in fade-in slide-in-from-bottom-3"
+    :style="{ 'animation-delay': `${index * 40}ms` }">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
+      <span v-if="user.role" :class="roleStyle(user.role)"
+        class="self-start text-[8px] sm:text-[9px] font-black px-2 py-0.5 rounded-full border tracking-tighter whitespace-nowrap uppercase">
+        {{ user.role }}
+      </span>
 
-          <div class="flex items-center gap-1.5 order-2 sm:order-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-gray-300 shrink-0" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <div class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-tight truncate">
-              Joined {{ formatDate(user.createdAt) }}
-            </div>
-          </div>
-
-          <span v-if="user.role" :class="roleStyle(user.role)"
-            class="order-1 sm:order-2 self-start sm:self-auto text-[8px] sm:text-[9px] font-black px-2 py-0.5 rounded-full border tracking-tighter whitespace-nowrap">
-            {{ user.role }}
-          </span>
-        </div>
-
-        <div class="space-y-1 mb-6">
-          <h2
-            class="text-base font-bold text-gray-900 leading-tight truncate group-hover:text-[#ff1493] transition-colors">
-            {{ user.name }}
-          </h2>
-
-          <p class="text-gray-400 text-[11px] truncate">{{ user.email }}</p>
-
-          <div class="inline-flex items-center mt-2 px-2 py-1 bg-green-50 rounded-lg border border-green-100">
-            <span class="text-green-600 text-[10px] font-bold tracking-tight">
-              ${{ user.salary?.toLocaleString() }}
-            </span>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 pt-3 border-t border-gray-50">
-          <BaseBtn @click="openEditModal(user)" variant="ghost" size="sm" :rounded="true" class="w-full">
-            Edit
-          </BaseBtn>
-
-          <BaseBtn @click="
-            showDeleteModal = true;
-          selectedUser = user;
-          " variant="danger" size="sm" :rounded="true" class="py-1 px-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-          </BaseBtn>
-        </div>
+      <div class="flex items-center gap-1 text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 shrink-0 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span class="text-[9px] font-bold uppercase tracking-tight truncate">
+          {{ formatDate(user.createdAt) }}
+        </span>
       </div>
     </div>
+
+    <div class="space-y-0.5 mb-4 sm:mb-6">
+      <h2 class="text-sm sm:text-base font-bold text-gray-900 leading-tight truncate group-hover:text-[#ff1493] transition-colors">
+        {{ user.name }}
+      </h2>
+      <p class="text-gray-400 text-[10px] sm:text-[11px] truncate mb-2">{{ user.email }}</p>
+
+      <div class="inline-flex items-center mt-1 px-1.5 py-0.5 sm:px-2 sm:py-1 bg-green-50 rounded-lg border border-green-100">
+        <span class="text-green-600 text-[9px] sm:text-[10px] font-bold tracking-tight">
+          ${{ user.salary?.toLocaleString() }}
+        </span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 pt-3 border-t border-gray-50 mt-auto">
+      <BaseBtn @click="openEditModal(user)" variant="ghost" size="sm" :rounded="true" class="flex-1 text-[10px] sm:text-xs py-2">
+        Edit
+      </BaseBtn>
+
+      <BaseBtn @click="triggerDelete(user)" variant="danger" size="sm" :rounded="true" class="shrink-0 p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </BaseBtn>
+    </div>
+  </div>
+</div>
   </div>
 
   <BaseDialog :show="showDeleteModal" @close="showDeleteModal = false" @confirm="handleDelete">
