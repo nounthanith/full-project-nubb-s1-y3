@@ -31,7 +31,7 @@ const confirmLogout = () => {
     
     <BaseBtn 
       v-if="token" 
-      type="ghost" 
+      variant="outline" 
       size="sm" 
       :rounded="true"
       @click="triggerLogout"

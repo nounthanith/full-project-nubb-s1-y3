@@ -2,7 +2,7 @@
     <div class="">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div class="space-y-1">
-                <h1 class="text-xl font-black text-gray-900 tracking-tight">
+                <h1 class="text-xl font-black text-gray-900 tracking-tight uppercase">
                     Deliveries<span class="text-[#ff1493]">.</span>
                 </h1>
                 <p class="text-gray-500 font-medium tracking-wide text-sm">Logistics Management Dashboard</p>
@@ -19,9 +19,15 @@
                     </svg>
                 </div>
 
-                <BaseBtn @click="openAddModal" variant="secondary" size="sm">
-                    New Shipment
-                </BaseBtn>
+                <BaseBtn @click="showForm = true" variant="secondary" :rounded="false" size="sm">
+                <span class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="3">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Add New
+                </span>
+            </BaseBtn>
             </div>
         </header>
 
@@ -140,7 +146,7 @@
                         <Selection v-model="form.recipient.address" :roles="addresses" label="Address"
                             placeholder="Select an address" />
                         <Input v-model="form.recipient.phone" label="Phone" />
-                        <Input v-model="form.recipient.address" label="Address" />
+                        <!-- <Input v-model="form.recipient.address" label="Address" /> -->
                     </div>
                 </div>
 

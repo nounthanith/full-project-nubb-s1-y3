@@ -82,6 +82,35 @@ Smooth Animation មិនឲ្យបាត់ភ្លាមៗ
 - Slide Dropdown
 - Modal Animation
 
+## 🔹 onMounted – Lifecycle Hook
+
+`onMounted` ជា Lifecycle Hook ក្នុង Vue 3
+
+ប្រើសម្រាប់ដាក់ Code ដែលត្រូវប្រតិបត្តិក្រោយ Component ត្រូវបាន Mount ទៅក្នុង DOM
+
+មានន័យថា ពេល Component បង្ហាញរួចរាល់ → ដំណើរការ Code
+
+### Example
+
+```javascript
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  console.log('Component is mounted!')
+  // Fetch data from API
+  // Initialize plugins
+  // Setup event listeners
+})
+```
+
+### Common Use
+
+- Fetch data from API
+- Initialize third-party libraries
+- Setup event listeners
+- Access DOM elements
+- Start timers or intervals
+
 ## 🧠 Quick Memory Rules
 
 | Feature | Direction | Purpose |
@@ -91,7 +120,12 @@ Smooth Animation មិនឲ្យបាត់ភ្លាមៗ
 | defineEmits | Child → Parent | Send Event |
 | Teleport | UI Move | Change DOM Position |
 | Transition | UI Effect | Animation |
+| onMounted | Lifecycle | Execute Code After Mount |
 
 ---
 
 **Vue 3 គំនិតសំខាន់គឺ Reactive + Component Communication + Smooth UI ✨**
+
+
+
+
