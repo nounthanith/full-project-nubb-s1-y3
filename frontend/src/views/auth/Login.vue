@@ -32,7 +32,7 @@ const handleLogin = async () => {
     
     <div class="text-center mb-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <h1 class="text-4xl font-black tracking-tighter text-gray-900 uppercase">
-        Welcome <span class="text-[#ff1493]">Back</span>
+        Welcome to <span class="text-[#ff1493]">Salu</span> <span class="text-white bg-[#ff1493] px-2 py-1 rounded-lg">Hub</span>
       </h1>
       <p class="text-gray-400 text-sm font-medium mt-2 tracking-wide">Enter your details to access your account</p>
     </div>
@@ -60,9 +60,9 @@ const handleLogin = async () => {
           </BaseBtn>
         </div>
 
-        <p class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mt-6">
+        <!-- <p class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mt-6">
           New here? <a href="#" class="text-[#ff1493] hover:underline">Create Account</a>
-        </p>
+        </p> -->
       </form>
     </div>
 

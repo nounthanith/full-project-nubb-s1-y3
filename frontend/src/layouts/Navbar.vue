@@ -12,7 +12,7 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <BaseBtn type="ghost" size="sm">Help</BaseBtn>
+        <!-- <BaseBtn type="ghost" size="sm">Help</BaseBtn> -->
         <LogBtn/>
       </div>
     </div>

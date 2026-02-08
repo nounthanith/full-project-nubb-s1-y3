@@ -92,20 +92,19 @@
                             <p class="text-xl font-black text-gray-900">${{ item.shippingCost }}</p>
                         </div>
                         <div class="flex gap-2">
-                            <button @click="openEditModal(item)"
-                                class="p-3 bg-gray-50 hover:bg-gray-100 text-gray-400 hover:text-gray-900 rounded-2xl transition-all">
+                            <BaseBtn @click="openEditModal(item)" variant="ghost" :rounded="true", size="sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
-                            </button>
-                            <button @click="confirmDelete(item)"
-                                class="p-3 bg-gray-50 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-2xl transition-all">
+                            </BaseBtn>
+                            <BaseBtn @click="confirmDelete(item)"
+                                variant="danger", :rounded="true" size="sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
-                            </button>
+                            </BaseBtn>
                         </div>
                     </div>
                 </div>
@@ -123,37 +122,37 @@
             <div class="space-y-8 py-6 max-h-[75vh] overflow-y-auto px-1 custom-scrollbar">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
-                        <Selection v-model="form.category" :roles="categories" label="Category"
+                        <Selection v-model="form.category" :roles="categories" label="ប្រភេទឥតវ៉ាន់*"
                             placeholder="Select a category" />
                     </div>
-                    <Input v-model="form.weight" @input="updateShippingCost" type="number" label="Weight (kg)" />
+                    <Input v-model="form.weight" @input="updateShippingCost" type="number" label="គីឡូ (kg)" />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-4">
-                        <h3 class="text-[10px] font-black text-[#ff1493] uppercase tracking-[0.2em] mb-4">Pickup Info
+                        <h3 class="text-[10px] font-black text-[#ff1493] uppercase tracking-[0.2em] mb-4">ព័តមានអ្នកផ្ញើរ
                         </h3>
-                        <Input v-model="form.sender.name" label="Name" />
-                        <Selection v-model="form.sender.address" :roles="addresses" label="Address"
+                        <Input v-model="form.sender.name" label="ឈ្មោះអ្នកផ្ញើរ" />
+                        <Selection v-model="form.sender.address" :roles="addresses" label="ទីតាំងផ្ញើរ"
                             placeholder="Select an address" />
-                        <Input v-model="form.sender.phone" label="Phone" />
+                        <Input v-model="form.sender.phone" label="លេខអ្នកផ្ញើរ" />
                     </div>
 
                     <div class="space-y-4">
-                        <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-4">Delivery Info
+                        <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-4">ព័តមានអ្នកទទួល
                         </h3>
-                        <Input v-model="form.recipient.name" label="Name" />
-                        <Selection v-model="form.recipient.address" :roles="addresses" label="Address"
+                        <Input v-model="form.recipient.name" label="ឈ្មោះអ្នកទទួល" />
+                        <Selection v-model="form.recipient.address" :roles="addresses" label="ទីតាំងទទួល"
                             placeholder="Select an address" />
-                        <Input v-model="form.recipient.phone" label="Phone" />
+                        <Input v-model="form.recipient.phone" label="លេទូរស័ព្ទអ្នកទទួល" />
                         <!-- <Input v-model="form.recipient.address" label="Address" /> -->
                     </div>
                 </div>
 
                 <div class="pt-6 border-t border-gray-50 grid grid-cols-2 gap-4">
-                    <Input v-model="form.shippingCost" type="number" label="Total Price ($)" readonly />
+                    <Input v-model="form.shippingCost" type="number" label="តម្លៃសរុប ($)" readonly />
                     <div v-if="isEditing" class="space-y-1">
-                        <Selection v-model="form.status" :roles="['Pending', 'In Transit', 'Delivered']" label="Status"
+                        <Selection v-model="form.status" :roles="['Pending', 'In Transit', 'Delivered']" label="ស្ថានភាពបញ្ញើរ"
                             placeholder="Select a status" />
                     </div>
                 </div>
